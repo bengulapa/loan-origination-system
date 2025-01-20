@@ -2,7 +2,6 @@ import ChecklistIcon from '@mui/icons-material/Checklist';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
-import RememberMeIcon from '@mui/icons-material/RememberMe';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import TaskIcon from '@mui/icons-material/Task';
 import {
@@ -90,10 +89,10 @@ const SideBar = ({ open, handleDrawerClose, theme }: IProps) => {
     {
       text: 'MyDeals',
       icon: <CreditScoreIcon />,
-      path: `application`
+      path: `deals`
     },
     { text: 'MyTasks', icon: <TaskIcon />, path: 'tasks', badgeContent: 4 },
-    { text: 'MyHub', icon: <ChecklistIcon />, path: 'decision' }
+    { text: 'MyHub', icon: <ChecklistIcon />, path: 'hub' }
   ];
 
   return (
