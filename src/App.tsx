@@ -11,6 +11,7 @@ import { Color } from './styles/colors';
 import './styles/styles.css';
 import { createOaTheme } from './styles/theme';
 import './styles/utility.css';
+import Overview from './pages/Overview';
 
 const theme = createOaTheme();
 
@@ -29,19 +30,23 @@ const App = () => {
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
-        <Routes>
-          <Route path='/' element={<Navigate to='/search' />} />
-
-          <Route path='*' element={<Search />} />
-        </Routes>
-        <Box sx={{ display: 'flex', backgroundColor: Color.lightPrimary }}>
+        <Box sx={{ display: 'flex' }}>
           <Header open={open} handleDrawerOpen={handleDrawerOpen} />
 
           <SideBar open={open} handleDrawerClose={handleDrawerClose} theme={theme} />
 
-          <Box component='main' sx={{ flexGrow: 1, p: 2 }}>
+          <Box
+            component='main'
+            sx={{ width: '100%', height: '100%', p: 2, backgroundColor: Color.lightPrimary }}
+          >
             <DrawerHeader />
 
+            <Routes>
+              <Route path='/' element={<Navigate to='/search' />} />
+              <Route path='overview' element={<Overview />} />
+
+              <Route path='*' element={<Search />} />
+            </Routes>
             <Outlet />
           </Box>
         </Box>
