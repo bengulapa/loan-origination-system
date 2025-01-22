@@ -104,7 +104,7 @@ const SideBar = ({ open, handleDrawerClose, theme }: IProps) => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Box className='d-flex flex-column justify-content-between h-100'>
+        <Box className='flex flex-column justify-between h-full'>
           <List dense disablePadding>
             {menuItems.map((item, index) => (
               <ListItem key={index} disablePadding sx={{ display: 'block' }}>

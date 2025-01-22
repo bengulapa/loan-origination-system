@@ -27,11 +27,11 @@ const Overview = () => {
                 285 deals
               </Typography>
               <Typography variant='body2'>$1,292,000 (28 deals approved)</Typography>
-              <Box className='d-flex pl-2' sx={{ color: Color.lightGray }}>
-                <Typography variant='caption' className='d-flex align-items-center mr-4'>
+              <Box className='flex pl-2' sx={{ color: Color.lightGray }}>
+                <Typography variant='caption' className='flex align-center mr-4'>
                   <TrendingUpIcon /> 17%
                 </Typography>
-                <Typography variant='caption' className='d-flex align-items-center'>
+                <Typography variant='caption' className='flex align-center'>
                   <AddIcon /> $86,000 this month
                 </Typography>
               </Box>
@@ -47,8 +47,8 @@ const Overview = () => {
               subheader={<CardTitleHeader title='Applications' />}
               sx={{ pb: 0 }}
             />
-            <CardContent className='d-flex justify-content-between' sx={{ pt: 0, pl: 7 }}>
-              <div className='w-100'>
+            <CardContent className='flex justify-between' sx={{ pt: 0, pl: 7 }}>
+              <div className='w-full'>
                 <Typography variant='caption' sx={{ color: Color.textGray }}>
                   285 deals
                 </Typography>
@@ -79,10 +79,7 @@ const Overview = () => {
                 </Typography>
                 <Typography variant='h5'>87.5%</Typography>
               </Box>
-              <Typography
-                variant='caption'
-                className='d-flex align-items-center justify-content-between'
-              >
+              <Typography variant='caption' className='flex align-center justify-between'>
                 <span>28 Approved</span> <span>4 Declined</span>
               </Typography>
             </CardContent>
@@ -96,7 +93,7 @@ const Overview = () => {
             <CardHeader subheader={<CardTitleHeader title='Closed Deals' />} sx={{ pb: 0 }} />
             <CardContent>
               <img
-                className='w-100'
+                className='w-full'
                 src='/assets/closed-deals-chart.png'
                 alt='Closed deals chart'
               />
@@ -109,7 +106,7 @@ const Overview = () => {
             <CardHeader subheader={<CardTitleHeader title='Top Asset Types' />} sx={{ pb: 0 }} />
             <CardContent sx={{ pt: 3 }}>
               <img
-                className='w-100'
+                className='w-full'
                 src='/assets/top-asset-types-chart.png'
                 alt='Top asset types chart'
               />
@@ -143,7 +140,7 @@ const Overview = () => {
       </Card>
 
       <Box>
-        <img className='w-100' src='/assets/marketing_banner.svg' alt='red book valuation' />
+        <img className='w-full' src='/assets/marketing_banner.svg' alt='red book valuation' />
       </Box>
     </Stack>
   );

@@ -53,7 +53,7 @@ const Header = ({ open, handleDrawerOpen }: AppBarProps) => {
         >
           <MenuIcon />
         </IconButton>
-        <div className='d-flex justify-content-end align-items-center w-100'>
+        <div className='w-full flex justify-end align-center '>
           <Typography variant='caption' className='mr-3'>
             Broker: Klein Moretti{' '}
             <Tooltip title='Email'>

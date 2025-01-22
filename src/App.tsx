@@ -7,11 +7,10 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { DrawerHeader } from './layout/DrawerHeader';
 import Header from './layout/Header';
 import SideBar from './layout/SideBar';
+import Overview from './pages/Overview';
 import { Color } from './styles/colors';
 import './styles/styles.css';
 import { createOaTheme } from './styles/theme';
-import './styles/utility.css';
-import Overview from './pages/Overview';
 
 const theme = createOaTheme();
 
