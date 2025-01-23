@@ -1,7 +1,5 @@
-import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
-import CallSharpIcon from '@mui/icons-material/CallSharp';
-import MenuIcon from '@mui/icons-material/Menu';
-import { IconButton, styled, Toolbar, Tooltip, Typography } from '@mui/material';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Badge, Button, IconButton, styled, Toolbar, Tooltip, Typography } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import AccountSettings from '../components/AccountSettings';
 
@@ -35,42 +33,40 @@ const AppBar = styled(MuiAppBar, {
   ]
 }));
 
-const Header = ({ open, handleDrawerOpen }: AppBarProps) => {
+const Header = ({ open }: AppBarProps) => {
+  const toggleNotification = () => {
+    console.log('Notification Clicked');
+  };
+
   return (
     <AppBar position='fixed' open={open} color='primary'>
       <Toolbar className='px-3'>
-        <IconButton
-          color='inherit'
-          aria-label='open drawer'
-          onClick={handleDrawerOpen}
-          edge='start'
-          sx={[
-            {
-              marginRight: 5
-            },
-            open && { display: 'none' }
-          ]}
-        >
-          <MenuIcon />
-        </IconButton>
-        <div className='w-full flex justify-end align-center '>
-          <Typography variant='caption' className='mr-3'>
-            Broker: Klein Moretti{' '}
-            <Tooltip title='Email'>
-              <a href='tel:0400000000'>
-                <CallSharpIcon sx={{ fontSize: 12 }} />
-              </a>
-            </Tooltip>{' '}
-            <Tooltip title='Call'>
-              <a href='email:mr.fool@lotm.com'>
-                <AlternateEmailSharpIcon sx={{ fontSize: 12 }} />
-              </a>
-            </Tooltip>
-            <br />
-            BDM: Ben Gulapa
-          </Typography>
+        <div className='w-full flex justify-between items-center py-2'>
+          <div className='w-1/3'>
+            <Typography variant='body1'>Welcome back, Ben</Typography>
+            <Typography variant='caption'>Here are your stats to date!</Typography>
+            <Typography variant='body2'>@ Broker Pty Ltd</Typography>
+          </div>
 
-          <AccountSettings />
+          <div className='w-2/3 flex h-full items-center justify-end gap-2'>
+            <Button variant='contained' color='secondary' className='mr-3'>
+              Start Application
+            </Button>
+
+            <Button variant='outlined' color='secondary' className='mr-3'>
+              Quick Quote
+            </Button>
+
+            <Tooltip title='Notifications'>
+              <IconButton color='secondary' className='mr-3' onClick={() => toggleNotification()}>
+                <Badge badgeContent={4} color='error'>
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+
+            <AccountSettings />
+          </div>
         </div>
       </Toolbar>
     </AppBar>

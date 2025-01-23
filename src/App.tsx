@@ -36,7 +36,7 @@ const App = () => {
 
           <Box
             component='main'
-            sx={{ width: '100%', height: '100%', p: 2, backgroundColor: Color.lightPrimary }}
+            className={'w-full h-full p-2 mt-5 bg-[' + Color.lightPrimary + '}]'}
           >
             <DrawerHeader />
 
