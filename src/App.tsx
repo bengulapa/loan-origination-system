@@ -7,6 +7,9 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { DrawerHeader } from './layout/DrawerHeader';
 import Header from './layout/Header';
 import SideBar from './layout/SideBar';
+import Application from './pages/Application';
+import MyDeals from './pages/MyDeals';
+import MyTasks from './pages/MyTasks';
 import Overview from './pages/Overview';
 import { Color } from './styles/colors';
 import './styles/styles.css';
@@ -41,10 +44,11 @@ const App = () => {
             <DrawerHeader />
 
             <Routes>
-              <Route path='/' element={<Navigate to='/search' />} />
-              <Route path='overview' element={<Overview />} />
-
-              <Route path='*' element={<Search />} />
+              <Route path='/' element={<Navigate to='/overview' />} />
+              <Route path='/overview' element={<Overview />} />
+              <Route path='/deals' element={<MyDeals />} />
+              <Route path='/tasks' element={<MyTasks />} />
+              <Route path='/application/:id' element={<Application />} />
             </Routes>
             <Outlet />
           </Box>
