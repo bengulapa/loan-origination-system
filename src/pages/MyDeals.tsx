@@ -1,3 +1,4 @@
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import SearchIcon from '@mui/icons-material/Search';
@@ -9,9 +10,12 @@ import {
   CardContent,
   Collapse,
   FormControl,
+  Grid2,
   IconButton,
   Input,
   InputAdornment,
+  List,
+  ListItem,
   Paper,
   Table,
   TableBody,
@@ -100,28 +104,57 @@ function Row(props: { row: Deal }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Guarantor</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell align='right'>Phone</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.guarantors.map((gr) => (
-                    <TableRow key={gr.name}>
-                      <TableCell component='th' scope='row'>
-                        {gr.name}
-                      </TableCell>
-                      <TableCell>{gr.email}</TableCell>
-                      <TableCell align='right'>{gr.phone}</TableCell>
+            <Grid2 container spacing={4} className='p-2'>
+              <Grid2 size={6}>
+                <Table className='w-full mr-2'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Guarantor</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Phone</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
+                  </TableHead>
+                  <TableBody>
+                    {row.guarantors.map((gr) => (
+                      <TableRow key={gr.name}>
+                        <TableCell component='th' scope='row'>
+                          {gr.name}
+                        </TableCell>
+                        <TableCell>{gr.email}</TableCell>
+                        <TableCell>{gr.phone}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Grid2>
+              <Grid2 size={3}>
+                <List dense className='ml-6'>
+                  <ListItem>Repayment amount: $785.59</ListItem>
+                  <ListItem>Repayment term: 5 years</ListItem>
+                  <ListItem>Asset backed: Yes</ListItem>
+                  <ListItem>Product: Motor Vehicle</ListItem>
+                </List>
+              </Grid2>
+              <Grid2 size={3}>
+                <Box>
+                  <Typography>Bank Link</Typography>
+                  <div className='flex mb-2'>
+                    <Typography variant='caption'>
+                      https://oa-bankstatements-pilot.azurewebsites.com/3213213123
+                    </Typography>
+                    <ContentCopyIcon />
+                  </div>
+
+                  <Typography>Biometrics Link</Typography>
+                  <div className='flex'>
+                    <Typography variant='caption'>
+                      https://oa-bankstatements-pilot.azurewebsites.com/3213213123
+                    </Typography>
+                    <ContentCopyIcon />
+                  </div>
+                </Box>
+              </Grid2>
+            </Grid2>
           </Collapse>
         </TableCell>
       </TableRow>
