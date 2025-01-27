@@ -1,7 +1,21 @@
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Badge, Button, IconButton, styled, Toolbar, Tooltip, Typography } from '@mui/material';
+import {
+  Badge,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  styled,
+  Toolbar,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import React from 'react';
 import AccountSettings from '../components/AccountSettings';
+import QuickQuoteForm from '../pages/application/QuickQuote';
 
 const drawerWidth = 220;
 
@@ -34,6 +48,8 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Header = ({ open }: AppBarProps) => {
+  const [openQuickQuote, setOpenQuickQuote] = React.useState(false);
+
   const toggleNotification = () => {
     console.log('Notification Clicked');
   };
@@ -49,11 +65,16 @@ const Header = ({ open }: AppBarProps) => {
           </div>
 
           <div className='w-2/3 flex h-full items-center justify-end gap-2'>
-            <Button variant='contained' color='secondary' className='mr-3'>
+            {/*             <Button variant='contained' color='secondary' className='mr-3'>
               Start Application
-            </Button>
+            </Button> */}
 
-            <Button variant='outlined' color='secondary' className='mr-3'>
+            <Button
+              variant='outlined'
+              color='secondary'
+              className='mr-3'
+              onClick={() => setOpenQuickQuote(open)}
+            >
               Quick Quote
             </Button>
 
@@ -69,6 +90,31 @@ const Header = ({ open }: AppBarProps) => {
           </div>
         </div>
       </Toolbar>
+
+      <Dialog
+        fullWidth={true}
+        maxWidth='md'
+        open={openQuickQuote}
+        onClose={() => setOpenQuickQuote(false)}
+      >
+        <DialogTitle>Quick Quote</DialogTitle>
+        <DialogContent>
+          <QuickQuoteForm />
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={() => setOpenQuickQuote(false)}>
+            Decline
+          </Button>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => setOpenQuickQuote(false)}
+            autoFocus
+          >
+            Accept & Start Application
+          </Button>
+        </DialogActions>
+      </Dialog>
     </AppBar>
   );
 };

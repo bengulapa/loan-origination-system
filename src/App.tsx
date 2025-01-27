@@ -1,4 +1,3 @@
-import { Search } from '@mui/icons-material';
 import { CssBaseline } from '@mui/material';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
@@ -7,13 +6,13 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { DrawerHeader } from './layout/DrawerHeader';
 import Header from './layout/Header';
 import SideBar from './layout/SideBar';
-import Application from './pages/Application';
 import MyDeals from './pages/MyDeals';
 import MyTasks from './pages/MyTasks';
 import Overview from './pages/Overview';
 import { Color } from './styles/colors';
 import './styles/styles.css';
 import { createOaTheme } from './styles/theme';
+import Application from './pages/application/Application';
 
 const theme = createOaTheme();
 
