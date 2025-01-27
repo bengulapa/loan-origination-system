@@ -77,7 +77,7 @@ const Application = () => {
                 <Box sx={{ flex: '1 1 auto' }} />
 
                 <Button variant='contained' color='primary' onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  {activeStep === steps.length - 1 ? 'Submit Application' : 'Next'}
                 </Button>
               </Box>
             </div>

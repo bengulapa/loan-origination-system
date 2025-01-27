@@ -1,9 +1,16 @@
 import {
   Button,
-  Checkbox,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
   FormControlLabel,
-  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   Paper,
   Radio,
   RadioGroup,
@@ -11,8 +18,20 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import React from 'react';
 
 const Guarantor = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Container component={Paper} className='p-2'>
@@ -26,80 +45,138 @@ const Guarantor = () => {
             <TextField label='Surname' fullWidth defaultValue='Last' />
           </Stack>
 
-          <div className='flex'>
-            <Stack direction='row' spacing={2}></Stack>
-            <Grid container spacing={2}>
-              <Typography variant='caption' gutterBottom>
-                Date of Birth *
-              </Typography>
-              <Grid item xs={4}>
-                <TextField label='Day' fullWidth defaultValue='09' />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField label='Month' fullWidth defaultValue='09' />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField label='Year' fullWidth defaultValue='1963' />
-              </Grid>
-            </Grid>
-          </div>
-
-          <Grid item xs={12}>
+          <Stack direction='row' spacing={2}>
+            <TextField label='Date of birth' fullWidth defaultValue='09' />
             <TextField label='Nationality *' fullWidth />
-          </Grid>
+          </Stack>
 
-          <Grid item xs={12}>
-            <Typography variant='h6' gutterBottom>
-              CONTACT DETAILS
-            </Typography>
+          <Typography variant='caption' gutterBottom>
+            CONTACT DETAILS
+          </Typography>
+
+          <Stack direction='row' spacing={2}>
             <TextField label='Email *' fullWidth />
-          </Grid>
-
-          <Grid item xs={12}>
             <TextField label='Mobile *' fullWidth />
-          </Grid>
+          </Stack>
 
-          <Grid item xs={12}>
-            <TextField
-              label='Address *'
-              fullWidth
-              defaultValue='9 BRUDEN HALL TCE WONTHAGG VIC 3995'
-            />
-          </Grid>
+          <TextField
+            label='Address *'
+            fullWidth
+            defaultValue='9 BRUDEN HALL TCE WONTHAGG VIC 3995'
+          />
 
-          <Grid item xs={12}>
-            <Button variant='outlined' color='primary'>
-              ADD ADDRESS MANUALLY
-            </Button>
-          </Grid>
+          <Button variant='outlined' color='primary'>
+            ADD ADDRESS MANUALLY
+          </Button>
 
-          <Grid item xs={12}>
-            <Typography variant='h6' gutterBottom>
-              PROPERTY BACKED
-            </Typography>
+          <div>
+            <Typography variant='caption'>PROPERTY BACKED</Typography>
             <RadioGroup row defaultValue='No'>
               <FormControlLabel value='Yes' control={<Radio />} label='Yes' />
               <FormControlLabel value='No' control={<Radio />} label='No' />
             </RadioGroup>
-          </Grid>
+          </div>
+          <div>
+            <Typography variant='caption'>Ownership type</Typography>
+            <RadioGroup row defaultValue='No'>
+              <FormControlLabel value='Yes' control={<Radio />} label='Owning' />
+              <FormControlLabel value='No' control={<Radio />} label='Owning with Mortgage' />
+            </RadioGroup>
+          </div>
 
-          <Grid item xs={12}>
-            <TextField label='Customize Ownership Type' fullWidth />
-          </Grid>
+          <Stack spacing={2}>
+            <TextField label='Asset type' fullWidth defaultValue='' />
+            <TextField label='Description' fullWidth defaultValue='' />
+            <TextField label='Value' fullWidth defaultValue='' />
 
-          <Grid item xs={12}>
-            <TextField label='Property' fullWidth />
-          </Grid>
+            <div className='flex justify-center gap-2 pb-4 border-b'>
+              <Button variant='contained' size='small'>
+                Save
+              </Button>
 
-          <Grid item xs={12}>
-            <TextField label='Runtime' fullWidth />
-          </Grid>
+              <Button variant='outlined' size='small'>
+                Cancel
+              </Button>
+            </div>
+          </Stack>
 
-          <Grid item xs={12}>
-            <FormControlLabel control={<Checkbox />} label='Boarding' />
-          </Grid>
+          <div className='border-b pb-4'>
+            <Typography variant='caption'>DEPENDENTS</Typography>
+
+            <TextField label='Number of adults (including guarantor)' fullWidth defaultValue='' />
+            <TextField label='Number of dependents' fullWidth defaultValue='' />
+          </div>
+
+          <div className='border-b pb-4'>
+            <Typography variant='caption'>eKYC</Typography>
+
+            <div className='flex items-center gap-4'>
+              <Typography variant='body2'>
+                We are making it easier for you to verify your guarantor's identify, simply send an
+                email with our Biometrics Link and the rest is up to the guarantor. Please consult
+                our policy for more information about this service.
+              </Typography>
+              <Button
+                variant='contained'
+                size='small'
+                color='secondary'
+                className='flex-none'
+                onClick={handleClickOpen}
+              >
+                Email eKYC link
+              </Button>
+            </div>
+          </div>
+
+          <div className='border-b pb-4'>
+            <Typography variant='caption'>ALTERNATE CONTACT</Typography>
+
+            <TextField label='Full name' fullWidth defaultValue='' />
+            <TextField label='Email' fullWidth defaultValue='' />
+            <TextField label='Mobile' fullWidth defaultValue='' />
+            <TextField label='Relationship' fullWidth defaultValue='' />
+          </div>
         </Stack>
       </Container>
+
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+        <DialogTitle>Email eKYC Link</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2}>
+            <TextField
+              autoFocus
+              required
+              id='name'
+              name='email'
+              label='Email Address'
+              type='email'
+              fullWidth
+            />
+            <FormControl fullWidth>
+              <InputLabel>eKYC Biometrics Link</InputLabel>
+              <OutlinedInput
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton>
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label='eKYC Biometrics Link'
+                disabled
+                defaultValue='https://oa-biometrics-pilot.azurewebsites.net/2b074eba-be91-407c-8038-b7f1969cc3f6'
+              />
+            </FormControl>
+            <TextField multiline rows={4} label='Message' fullWidth />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant='contained' color='primary' onClick={handleClose}>
+            Send email
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
