@@ -1,17 +1,16 @@
 import {
-  Container,
-  Paper,
-  Typography,
-  Grid,
-  TextField,
   Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   Checkbox,
-  Stack
+  Container,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Radio,
+  RadioGroup,
+  Stack,
+  TextField,
+  Typography
 } from '@mui/material';
-import React from 'react';
 
 const Guarantor = () => {
   return (

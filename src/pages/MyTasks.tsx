@@ -200,7 +200,7 @@ const MyTasks = () => {
                       {t.sla}
                     </TableCell>
                     <TableCell>
-                      {t.attachments.map((a, i) => (
+                      {t.attachments.map((_, i) => (
                         <AttachFileIcon key={i} />
                       ))}
                     </TableCell>

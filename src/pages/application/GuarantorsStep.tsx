@@ -6,7 +6,7 @@ import Guarantor from './Guarantor';
 const GuarantorsStep = () => {
   const [activeTab, setActiveTab] = React.useState('1');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
 
