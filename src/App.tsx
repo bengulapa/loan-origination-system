@@ -2,7 +2,7 @@ import { CssBaseline } from '@mui/material';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { DrawerHeader } from './layout/DrawerHeader';
 import Header from './layout/Header';
 import SideBar from './layout/SideBar';
@@ -18,6 +18,8 @@ const theme = createOaTheme();
 
 const App = () => {
   const [open, setOpen] = React.useState(true);
+  const [hidden, setHidden] = React.useState(false);
+  const location = useLocation();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -27,6 +29,16 @@ const App = () => {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    if (location.pathname.includes('application')) {
+      setHidden(true);
+      setOpen(false);
+    } else {
+      setHidden(false);
+      setOpen(true);
+    }
+  }, [location]);
+
   return (
     <>
       <CssBaseline />
@@ -34,12 +46,9 @@ const App = () => {
         <Box sx={{ display: 'flex' }}>
           <Header open={open} handleDrawerOpen={handleDrawerOpen} />
 
-          <SideBar open={open} handleDrawerClose={handleDrawerClose} theme={theme} />
+          {!hidden && <SideBar open={open} handleDrawerClose={handleDrawerClose} theme={theme} />}
 
-          <Box
-            component='main'
-            className={'w-full h-full p-2 mt-5 bg-[' + Color.lightPrimary + '}]'}
-          >
+          <Box component='main' className={'w-full h-full mt-5 bg-[' + Color.lightPrimary + '}]'}>
             <DrawerHeader />
 
             <Routes>

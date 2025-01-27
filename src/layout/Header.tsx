@@ -16,6 +16,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import React from 'react';
 import AccountSettings from '../components/AccountSettings';
 import QuickQuoteForm from '../pages/application/QuickQuote';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const drawerWidth = 220;
 
@@ -48,6 +49,9 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Header = ({ open }: AppBarProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [openQuickQuote, setOpenQuickQuote] = React.useState(false);
 
   const toggleNotification = () => {
@@ -69,14 +73,25 @@ const Header = ({ open }: AppBarProps) => {
               Start Application
             </Button> */}
 
-            <Button
-              variant='outlined'
-              color='secondary'
-              className='mr-3'
-              onClick={() => setOpenQuickQuote(open)}
-            >
-              Quick Quote
-            </Button>
+            {location.pathname.includes('application') ? (
+              <Button
+                variant='outlined'
+                color='secondary'
+                className='mr-3'
+                onClick={() => navigate('/overview')}
+              >
+                Cancel
+              </Button>
+            ) : (
+              <Button
+                variant='contained'
+                color='secondary'
+                className='mr-3'
+                onClick={() => setOpenQuickQuote(open)}
+              >
+                Quick Quote
+              </Button>
+            )}
 
             <Tooltip title='Notifications'>
               <IconButton color='secondary' className='mr-3' onClick={() => toggleNotification()}>
@@ -108,7 +123,10 @@ const Header = ({ open }: AppBarProps) => {
           <Button
             variant='contained'
             color='secondary'
-            onClick={() => setOpenQuickQuote(false)}
+            onClick={() => {
+              setOpenQuickQuote(false);
+              navigate('/application/new');
+            }}
             autoFocus
           >
             Accept & Start Application
