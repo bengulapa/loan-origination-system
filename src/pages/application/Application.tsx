@@ -14,9 +14,10 @@ import ApplicantStep from './ApplicantStep';
 import GuarantorsStep from './GuarantorsStep';
 import LoanStep from './LoanStep';
 import ReviewStep from './ReviewStep';
+import AssetStep from './AssetStep';
 
 const Application = () => {
-  const steps = ['Loan', 'Applicant', 'Guarantors', 'Review and Send'];
+  const steps = ['Asset', 'Applicant', 'Arrangement', 'Supplemental info', 'Supplemental docs'];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -30,12 +31,14 @@ const Application = () => {
   const getStep = (step: number) => {
     switch (step) {
       case 0:
-        return <LoanStep />;
+        return <AssetStep />;
       case 1:
         return <ApplicantStep />;
       case 2:
-        return <GuarantorsStep />;
+        return <LoanStep />;
       case 3:
+        return <GuarantorsStep />;
+      case 4:
         return <ReviewStep />;
     }
   };
