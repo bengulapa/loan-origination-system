@@ -1,135 +1,195 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Avatar,
+  Alert,
+  Box,
+  Button,
   Card,
   CardContent,
-  Checkbox,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
+  CircularProgress,
   Stack,
   TextField,
   Typography
 } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { ChangeEvent, useState } from 'react';
+import BusinessForm from './components/BusinessForm';
+
+export interface BusinessDetails {
+  abn: string;
+  acn: string;
+  gstDuration: string; // e.g., "43 months"
+  entityName: string;
+  entityType: string;
+  timeInBusiness: string; // e.g., "43 months"
+  status: string; // e.g., "Active"
+  businessNames: string[]; // Can have multiple business names
+  industryAnzsic: string;
+}
+
+// --- Mock Data ---
+const mockBusinessDatabase: BusinessDetails[] = [
+  {
+    abn: '32 616 528 191',
+    acn: '603 303 126',
+    gstDuration: '43 months',
+    entityName: 'ANGLE FINANCE PTY LTD',
+    entityType: 'Australian Private Company',
+    timeInBusiness: '43 months',
+    status: 'Active',
+    businessNames: ['ANGLE FINANCE'],
+    industryAnzsic: 'Financial and Insurance Services'
+  },
+  {
+    abn: '55 123 456 789',
+    acn: '123 456 789',
+    gstDuration: '120 months',
+    entityName: 'EXAMPLE TRADING CO PTY LTD',
+    entityType: 'Australian Private Company',
+    timeInBusiness: '10 years',
+    status: 'Active',
+    businessNames: ['EXAMPLE TRADING', 'EXAMPLE SERVICES'],
+    industryAnzsic: 'Retail Trade'
+  },
+  {
+    abn: '98 765 432 100',
+    acn: 'N/A', // Some entities might not have an ACN
+    gstDuration: '24 months',
+    entityName: 'SOLE TRADER SERVICES',
+    entityType: 'Sole Trader',
+    timeInBusiness: '2 years',
+    status: 'Active',
+    businessNames: ['SOLE TRADER SERVICES'],
+    industryAnzsic: 'Professional, Scientific and Technical Services'
+  }
+];
 
 const ApplicantStep = () => {
-  const { id } = useParams();
-  const [type, setType] = useState('Individual');
-  const [age, setAge] = useState(0);
-  const [checked, setChecked] = useState([1]);
+  // State for the search input value
+  const [searchValue, setSearchValue] = useState<string>('Angle Finance'); // Default to example
+  // State for loading status
+  const [loading, setLoading] = useState<boolean>(false);
+  // State for the found business details
+  const [businessDetails, setBusinessDetails] = useState<BusinessDetails | null>(null);
+  // State for search-related messages (e.g., "not found")
+  const [searchMessage, setSearchMessage] = useState<string>('');
 
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  // --- Handlers ---
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+  // Handle changes in the search input field
+  const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+    // Clear results when user starts typing again
+    if (businessDetails || searchMessage) {
+      setBusinessDetails(null);
+      setSearchMessage('');
     }
-
-    setChecked(newChecked);
   };
 
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
+  // Handle the search button click
+  const handleSearch = () => {
+    if (!searchValue) return; // Don't search if input is empty
 
-    if (id.includes('i')) {
-      setType('Individual');
-    }
+    console.log('Searching for applicant:', searchValue);
+    setLoading(true);
+    setBusinessDetails(null); // Clear previous results
+    setSearchMessage('');
 
-    if (id.includes('c')) {
-      setType('Company');
-    }
+    // Simulate network delay/API call
+    setTimeout(() => {
+      const searchTerm = searchValue.trim().toUpperCase();
 
-    if (id.includes('1')) {
-      setAge(1);
-    } else {
-      setAge(4);
-    }
-  }, [id]);
+      // Find business details by checking ABN, ACN, or Entity Name (case-insensitive)
+      const foundBusiness = mockBusinessDatabase.find(
+        (business) =>
+          String(business.abn).replace(/\s/g, '') === searchTerm.replace(/\s/g, '') || // Compare ABN (ignore spaces)
+          String(business.acn).replace(/\s/g, '') === searchTerm.replace(/\s/g, '') || // Compare ACN (ignore spaces)
+          String(business.entityName).toUpperCase() === searchTerm // Compare Entity Name
+      );
+
+      if (foundBusiness) {
+        setBusinessDetails(foundBusiness);
+      } else {
+        setSearchMessage(
+          `No business found matching "${searchValue}". Please check the ABN, ACN, or Entity Name.`
+        );
+      }
+      setLoading(false);
+    }, 1500); // 1.5 second delay
+  };
 
   return (
     <>
       <Card className='mt-4'>
         <CardContent>
           <Typography variant='h6' className='text-center mb-4'>
-            Now add applicant and guarantor information
+            Now add the applicant information
           </Typography>
 
-          <Stack spacing={2}>
-            <TextField label='ABN' fullWidth defaultValue='012345678910' />
-            <TextField label='Entity name' fullWidth defaultValue='Gula Patisserie' />
-            <TextField label='ABN active from' fullWidth defaultValue='15/05/1991' />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              p: { xs: 2, sm: 4 },
+              width: '100%',
+              maxWidth: '800px', // Limit width
+              bgcolor: 'transparent'
+            }}
+          >
+            {/* Search Input Section */}
+            <Box sx={{ width: '100%', mb: 1 }}>
+              <Typography
+                variant='subtitle1'
+                component='label'
+                htmlFor='applicant-search-input'
+                sx={{ display: 'block', mb: 1, fontWeight: 'medium' }}
+              >
+                What are you looking for?
+              </Typography>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} alignItems='center'>
+                <TextField
+                  id='applicant-search-input'
+                  variant='outlined'
+                  value={searchValue}
+                  onChange={handleSearchInputChange}
+                  placeholder='(Enter the ABN, ACN OR Entity Name)'
+                  fullWidth // Take full width within the Stack item
+                  sx={{
+                    flexGrow: 1, // Allow text field to grow
+                    '& .MuiOutlinedInput-root': {
+                      bgcolor: 'white' // White background for input
+                      // Skipping specific styling as requested
+                    }
+                  }}
+                />
+                {/* Search Button */}
+                <Button
+                  variant='contained'
+                  onClick={handleSearch}
+                  disabled={loading || !searchValue} // Disable if loading or input is empty
+                >
+                  {loading ? <CircularProgress size={24} color='inherit' /> : 'SEARCH'}
+                </Button>
+              </Stack>
+              <Typography
+                variant='caption'
+                sx={{ display: 'block', mt: 0.5, color: 'text.secondary' }}
+              >
+                (Enter the ABN, ACN OR Entity Name)
+              </Typography>
+            </Box>
 
-            {age < 2 && (
-              <>
-                <Typography variant='body1' className='text-center my-4'>
-                  Previous ABN
-                </Typography>
+            {/* Results/Messages Section */}
+            <Box sx={{ width: '100%', mt: 2 }}>
+              {/* Display Business Details (if found) */}
+              {businessDetails && <BusinessForm details={businessDetails} />}
 
-                <TextField label='Previous ABN' fullWidth />
-              </>
-            )}
-
-            {type === 'Company' && (
-              <>
-                <Accordion defaultExpanded>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls='panel1-content'
-                    id='panel1-header'
-                  >
-                    <Typography component='span'>Directors</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography component='span'>
-                      Select directors as guarantors (at least 2)
-                    </Typography>
-                    <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                      {[0, 1, 2, 3].map((value) => {
-                        const labelId = `checkbox-list-secondary-label-${value}`;
-                        return (
-                          <ListItem
-                            key={value}
-                            secondaryAction={
-                              <Checkbox
-                                edge='end'
-                                onChange={handleToggle(value)}
-                                checked={checked.includes(value)}
-                                inputProps={{ 'aria-labelledby': labelId }}
-                              />
-                            }
-                            disablePadding
-                          >
-                            <ListItemButton>
-                              <ListItemAvatar>
-                                <Avatar />
-                              </ListItemAvatar>
-                              <ListItemText
-                                id={labelId}
-                                primary={`Director ${value + 1}`}
-                                secondary={`${value + 1} Dummy Address ${value + 1}`}
-                              />
-                            </ListItemButton>
-                          </ListItem>
-                        );
-                      })}
-                    </List>
-                  </AccordionDetails>
-                </Accordion>
-              </>
-            )}
-          </Stack>
+              {/* Display Search Message (e.g., "not found") */}
+              {searchMessage && !businessDetails && (
+                <Alert severity='warning' sx={{ mt: 3 }}>
+                  {searchMessage}
+                </Alert>
+              )}
+            </Box>
+          </Box>
         </CardContent>
       </Card>
     </>
